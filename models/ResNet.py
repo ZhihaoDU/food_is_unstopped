@@ -174,3 +174,28 @@ class ATTDenseNet(torch.nn.Module):
         X = self.fc(X)
         assert X.size() == (N, 101)
         return X
+
+
+class DenseNet(torch.nn.Module):
+    def __init__(self):
+        torch.nn.Module.__init__(self)
+        densenet_model = torchvision.models.densenet121(pretrained=True)
+        self.features = densenet_model.features
+        self.fc = torch.nn.Linear(512*2, 101)
+
+        torch.nn.init.kaiming_normal_(self.fc.weight.data)
+        if self.fc.bias is not None:
+            torch.nn.init.constant_(self.fc.bias.data, val=0)
+    def forward(self, X):
+        N = X.size()[0]
+        assert X.size() == (N, 3, 448, 448)
+        X = self.features(X) # N, 1024, 14, 14
+        X = F.relu(X, inplace=True)
+        X = F.avg_pool2d(X, kernel_size=14, stride=1).view(N, -1)
+        X = self.fc(X)
+        assert X.size() == (N, 101)
+        return X
+    def freeze_layers(self, grad=False):
+        # Freeze all previous layers.
+        for param in self.features.parameters():
+            param.requires_grad = grad

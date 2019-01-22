@@ -22,8 +22,9 @@ def train(**kwargs):
     #model = models.ATTDenseNet()
     #model = torchvision.models.densenet121(pretrained=True)
     #model.classifier = torch.nn.Linear(2*512, 101)
-    opt.model = 'BResNet'
-    model = models.BResNet()
+    opt.batch_size=64
+    #opt.model, model = 'BResNet', models.BResNet()
+    opt.model, model = 'DenseNet448', models.DenseNet()
     opt._parse(kwargs)
     if opt.load_latest :
         path = 'models/'+opt.model+'/best.pth'
@@ -47,8 +48,6 @@ def train(**kwargs):
     for epoch in range(opt.max_epoch):
         if epoch == 10:
             model.freeze_layers(grad=True)
-            #for param in model.features.parameters():
-            #    param.requires_grad_(True)
         num_total = 0
         num_correct = 0
         running_loss = 0.
