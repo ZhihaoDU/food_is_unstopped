@@ -6,8 +6,8 @@ import torchvision
 import torchvision.transforms as transforms
 import models
 from config import opt
-from torchnet import meter
-from tqdm import tqdm
+#from torchnet import meter
+#from tqdm import tqdm
 import numpy as np
 import time
 import torch.nn.functional as F
@@ -15,12 +15,12 @@ import torch
 import torch.nn as nn
 
 def train(**kwargs):
-    opt.model = 'ResNet34'
+    opt.model = 'DenseNet121'
     opt.load_latest = False
     opt.load_model_path = None
     opt._parse(kwargs)
     model = torchvision.models.densenet121(pretrained=True)
-    model.classifier = torch.nn.Linear(128*512, 101)
+    model.classifier = torch.nn.Linear(2*512, 101)
     if opt.load_model_path :
         path = None
         model.load_state_dict(torch.load(path))
@@ -47,7 +47,7 @@ def train(**kwargs):
         num_total = 0
         num_correct = 0
         running_loss = 0.
-        for (data, label) in tqdm(train_dataloader):
+        for (data, label) in (train_dataloader):
             #train model
             data.requires_grad_()
             input = data.to(opt.device)
@@ -60,7 +60,7 @@ def train(**kwargs):
             optimizer.step()
             _, prediction = torch.max(score.data, 1)
             num_total += data.shape[0]
-            num_correct += torch.sum(prediction == target.data).numpy()
+            num_correct += torch.sum(prediction == target.data).cpu().numpy()
             running_loss += loss.item()
         running_loss/=num_total
         acc_train = 100.0*num_correct/num_total
@@ -91,7 +91,7 @@ def val(model, dataloader, epoch):
         score = model(input)
         _, prediction = torch.max(score.data, 1)
         num_total += data.shape[0]
-        num_correct += torch.sum(prediction == target.data).numpy()
+        num_correct += torch.sum(prediction == target.data).cpu().numpy()
     acc = 100.0*num_correct/num_total
     model.train()
     return acc
@@ -103,5 +103,6 @@ def test(**kwargs):
 
 
 if __name__=='__main__':
-    import fire
-    fire.Fire()
+    #import fire
+    #fire.Fire()
+    train()
