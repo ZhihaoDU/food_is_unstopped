@@ -17,48 +17,28 @@ class BResNet(torch.nn.Module):
         self.layer3 = resnet_model.layer3
         self.layer4 = resnet_model.layer4
 
-        resnet_model = torchvision.models.resnet34(pretrained=True)
-        self._conv1 = resnet_model.conv1
-        self._bn1 = resnet_model.bn1
-        self._relu = resnet_model.relu
-        self._maxpool = resnet_model.maxpool
-        self._layer1 = resnet_model.layer1
-        self._layer2 = resnet_model.layer2
-        self._layer3 = resnet_model.layer3
-        self._layer4 = resnet_model.layer4
         # Linear classifier.
         self.fc = torch.nn.Linear(512**2, 101)
 
         torch.nn.init.kaiming_normal_(self.fc.weight.data)
         if self.fc.bias is not None:
             torch.nn.init.constant_(self.fc.bias.data, val=0)
-
-
     def forward(self, X):
 
         N = X.size()[0]
-        assert X.size() == (N, 3, 224, 224)
-        x1 = self.conv1(X)
-        x1 = self.bn1(x1)
-        x1 = self.relu(x1)
-        x1 = self.maxpool(x1)
-        x1 = self.layer1(x1)
-        x1 = self.layer2(x1)
-        x1 = self.layer3(x1)
-        x1 = self.layer4(x1)
+        assert X.size() == (N, 3, 448, 448)
+        x = self.conv1(X)
+        x = self.bn1(x)
+        x = self.relu(x)
+        x = self.maxpool(x)
 
-        x2 = self._conv1(X)
-        x2 = self._bn1(x2)
-        x2 = self._relu(x2)
-        x2 = self._maxpool(x2)
-        x2 = self._layer1(x2)
-        x2 = self._layer2(x2)
-        x2 = self._layer3(x2)
-        x2 = self._layer4(x2)
-        assert x1.size() == (N, 512, 7, 7)
-        x1 = x1.view(N, 512, 7**2)
-        x2 = x2.view(N, 512, 7**2)
-        X = torch.bmm(x1, torch.transpose(x2, 1, 2)) / (7**2)  # Bilinear
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
+        X = self.layer4(x)
+        assert X.size() == (N, 512, 14, 14)
+        X = X.view(N, 512, 14**2)
+        X = torch.bmm(X, torch.transpose(X, 1, 2)) / (14**2)  # Bilinear
         assert X.size() == (N, 512, 512)
         X = X.view(N, 512**2)
         X = torch.sqrt(X + 1e-5)
@@ -66,7 +46,20 @@ class BResNet(torch.nn.Module):
         X = self.fc(X)
         assert X.size() == (N, 101)
         return X
-
+    def freeze_layers(self, grad=False):
+        # Freeze all previous layers.
+        for param in self.conv1.parameters():
+            param.requires_grad = grad
+        for param in self.bn1.parameters():
+            param.requires_grad = grad
+        for param in self.layer1.parameters():
+            param.requires_grad = grad
+        for param in self.layer2.parameters():
+            param.requires_grad = grad
+        for param in self.layer3.parameters():
+            param.requires_grad = grad
+        for param in self.layer4.parameters():
+            param.requires_grad = grad
 
 
 
