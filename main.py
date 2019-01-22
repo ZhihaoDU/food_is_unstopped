@@ -18,12 +18,12 @@ def train(**kwargs):
     #opt.load_latest = True
     #opt.load_model_path = None
 
-    opt.model = 'ATTDenseNet'
-    model = models.ATTDenseNet()
+    #opt.model = 'ATTDenseNet'
+    #model = models.ATTDenseNet()
     #model = torchvision.models.densenet121(pretrained=True)
     #model.classifier = torch.nn.Linear(2*512, 101)
-    #opt.model = 'BResNet'
-    #model = models.BResNet()
+    opt.model = 'BResNet'
+    model = models.BResNet()
     opt._parse(kwargs)
     if opt.load_latest :
         path = 'models/'+opt.model+'/best.pth'
@@ -41,13 +41,14 @@ def train(**kwargs):
     val_dataloader = DataLoader(val_data, opt.batch_size, shuffle=False, num_workers=opt.num_workers)
     best_acc = 0.
     print('Epoch\tTrain loss\tTrain acc\tValid acc')
-    for param in model.features.parameters():
-        param.requires_grad_(False)
-
+    #for param in model.features.parameters():
+    #   param.requires_grad_(False)
+    model.freeze_layers(grad=False)
     for epoch in range(opt.max_epoch):
         if epoch == 10:
-            for param in model.features.parameters():
-                param.requires_grad_(True)
+            model.freeze_layers(grad=True)
+            #for param in model.features.parameters():
+            #    param.requires_grad_(True)
         num_total = 0
         num_correct = 0
         running_loss = 0.
