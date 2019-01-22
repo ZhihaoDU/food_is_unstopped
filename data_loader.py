@@ -8,8 +8,9 @@ class Food(Dataset):
     def __init__(self, root_dir='../food-101/', mode='train', transform=None):
         if transform is None:
             self.transform = transforms.Compose([
+                transforms.RandomHorizontalFlip(20),
+                transforms.RandomRotation(),
                 transforms.Resize(size=224),  # Let smaller edge match
-                transforms.RandomHorizontalFlip(),
                 transforms.RandomCrop(size=224),
                 transforms.ToTensor(),
                 transforms.Normalize(mean=(0.485, 0.456, 0.406),
