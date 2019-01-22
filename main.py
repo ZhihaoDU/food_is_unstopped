@@ -16,13 +16,13 @@ import torch.nn as nn
 
 def train(**kwargs):
     opt.model = 'DenseNet121'
-    opt.load_latest = False
+    opt.load_latest = True
     opt.load_model_path = None
     opt._parse(kwargs)
     model = torchvision.models.densenet121(pretrained=True)
     model.classifier = torch.nn.Linear(2*512, 101)
-    if opt.load_model_path :
-        path = None
+    if opt.load_latest :
+        path = 'models/DenseNet121/best.pth'
         model.load_state_dict(torch.load(path))
     model.to(opt.device)
     critertion = torch.nn.CrossEntropyLoss()
@@ -33,12 +33,12 @@ def train(**kwargs):
     )
     train_data = Food(mode='train')
     val_data = Food(mode='val')
-    train_dataloader = DataLoader(train_data, opt.batch_size, shuffle=True, num_workers=opt.num_workers)
-    val_dataloader = DataLoader(val_data, opt.batch_size, shuffle=False, num_workers=opt.num_workers)
+    train_dataloader = DataLoader(train_data, opt.batch_size, shuffle=True, num_workers=opt.num_workers,drop_last=True)
+    val_dataloader = DataLoader(val_data, opt.batch_size, shuffle=False, num_workers=opt.num_workers,drop_last=True)
     best_acc = 0.
     print('Epoch\tTrain loss\tTrain acc\tValid acc')
     for param in model.features.parameters():
-        param.requires_grad_(False)
+        param.requires_grad_(True)
 
     for epoch in range(opt.max_epoch):
         if epoch == 20:
