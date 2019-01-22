@@ -38,6 +38,7 @@ class Food(Dataset):
         class_name = self.file_list[index].split('/')[0]
         img_path = self.root_dir + 'images/' + self.file_list[index]+'.jpg'
         data = Image.open(img_path)
+        data = data.convert('RGB')
         data = self.transform(data)
         return data, self.mp_class_name2id[class_name]
 
