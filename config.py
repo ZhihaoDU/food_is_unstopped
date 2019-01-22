@@ -8,9 +8,9 @@ class DefaultConfig(object):
     model = 'ResNet'  # 使用的模型，名字必须与models/__init__.py中的名字一致
     load_model_path = None  # 加载预训练的模型的路径，为None代表不加载
     load_latest = False
-    batch_size = 64  # batch size
-    use_gpu = True  # user GPU or not
-    num_workers = 4  # how many workers for loading data
+    batch_size = 2  # batch size
+    use_gpu = False  # user GPU or not
+    num_workers = 2  # how many workers for loading data
     #print_freq = 600  # print info every N batch
 
     #debug_file = '/tmp/debug'  # if os.path.exists(debug_file): enter ipdb
