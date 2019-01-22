@@ -49,17 +49,17 @@ class BResNet(torch.nn.Module):
     def freeze_layers(self, grad=False):
         # Freeze all previous layers.
         for param in self.conv1.parameters():
-            param.requires_grad = grad
+            param.requires_grad_(grad)
         for param in self.bn1.parameters():
-            param.requires_grad = grad
+            param.requires_grad_(grad)
         for param in self.layer1.parameters():
-            param.requires_grad = grad
+            param.requires_grad_(grad)
         for param in self.layer2.parameters():
-            param.requires_grad = grad
+            param.requires_grad_(grad)
         for param in self.layer3.parameters():
-            param.requires_grad = grad
+            param.requires_grad_(grad)
         for param in self.layer4.parameters():
-            param.requires_grad = grad
+            param.requires_grad_(grad)
 
 
 
@@ -177,7 +177,7 @@ class ATTDenseNet(torch.nn.Module):
     def freeze_layers(self, grad=False):
         # Freeze all previous layers.
         for param in self.features.parameters():
-            param.requires_grad = grad
+            param.requires_grad_(grad)
 
 
 class DenseNet(torch.nn.Module):
@@ -202,4 +202,4 @@ class DenseNet(torch.nn.Module):
     def freeze_layers(self, grad=False):
         # Freeze all previous layers.
         for param in self.features.parameters():
-            param.requires_grad = grad
+            param.requires_grad_(grad)
