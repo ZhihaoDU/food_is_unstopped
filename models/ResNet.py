@@ -1,6 +1,7 @@
 import torch, os, torchvision
 from torch import nn
 import numpy as np
+import torch.nn.functional as F
 class BResNet(torch.nn.Module):
 
     def __init__(self):
@@ -150,23 +151,16 @@ class ScaledDotProductAttention(nn.Module):
 
 
 
-class ATTResNet(torch.nn.Module):
+class ATTDenseNet(torch.nn.Module):
 
     def __init__(self):
         torch.nn.Module.__init__(self)
-        resnet_model = torchvision.models.resnet34(pretrained=True)
+        densenet_model = torchvision.models.densenet121(pretrained=True)
 
-        self.conv1 = resnet_model.conv1
-        self.bn1 = resnet_model.bn1
-        self.relu = resnet_model.relu
-        self.maxpool = resnet_model.maxpool
-        self.layer1 = resnet_model.layer1
-        self.layer2 = resnet_model.layer2
-        self.layer3 = resnet_model.layer3
-        self.layer4 = resnet_model.layer4
-        self.multi_att = MultiHeadAttention(n_head=8, d_model=512, d_k=64, d_v=64, dropout=0.1)
+        self.features = densenet_model.features
+        self.multi_att = MultiHeadAttention(n_head=8, d_model=1024, d_k=64, d_v=64, dropout=0.1)
 
-        self.fc = torch.nn.Linear(512**2, 101)
+        self.fc = torch.nn.Linear(512*2, 101)
 
         torch.nn.init.kaiming_normal_(self.fc.weight.data)
         if self.fc.bias is not None:
@@ -177,20 +171,13 @@ class ATTResNet(torch.nn.Module):
 
         N = X.size()[0]
         assert X.size() == (N, 3, 224, 224)
-        x1 = self.conv1(X)
-        x1 = self.bn1(x1)
-        x1 = self.relu(x1)
-        x1 = self.maxpool(x1)
-        x1 = self.layer1(x1)
-        x1 = self.layer2(x1)
-        x1 = self.layer3(x1)
-        x1 = self.layer4(x1)
-
-
-        assert x1.size() == (N, 512, 7, 7)
-        X = x1.view(N, -1, 512)
+        x1 = self.features(X) # N, 1024, 7, 7
+        x1 = F.relu(x1, inplace=True)
+        #print(x1.shape)
+        X = x1.view(N, -1, 1024)
         X, att = self.multi_att(X,X,X)
-        X = X.view(N,-1)
+        X = X.view(N,1024, 7, 7)
+        X = F.avg_pool2d(X, kernel_size=7, stride=1).view(N, -1)
         X = self.fc(X)
         assert X.size() == (N, 101)
         return X

@@ -15,12 +15,13 @@ import torch.nn as nn
 
 def train(**kwargs):
 
-    opt.load_latest = True
+    #opt.load_latest = True
     #opt.load_model_path = None
 
-    opt.model = 'DenseNet121'
-    model = torchvision.models.densenet121(pretrained=True)
-    model.classifier = torch.nn.Linear(2*512, 101)
+    opt.model = 'ATTDenseNet'
+    model = models.ATTDenseNet()
+    #model = torchvision.models.densenet121(pretrained=True)
+    #model.classifier = torch.nn.Linear(2*512, 101)
     #opt.model = 'BResNet'
     #model = models.BResNet()
     opt._parse(kwargs)
@@ -41,7 +42,7 @@ def train(**kwargs):
     best_acc = 0.
     print('Epoch\tTrain loss\tTrain acc\tValid acc')
     for param in model.features.parameters():
-        param.requires_grad_(True)
+        param.requires_grad_(False)
 
     for epoch in range(opt.max_epoch):
         if epoch == 10:
