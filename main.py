@@ -11,37 +11,40 @@ from config import opt
 import numpy as np
 import time
 import torch.nn.functional as F
-import torch
 import torch.nn as nn
 
 def train(**kwargs):
-    opt.model = 'DenseNet121'
+
     opt.load_latest = True
-    opt.load_model_path = None
-    opt._parse(kwargs)
+    #opt.load_model_path = None
+
+    opt.model = 'DenseNet121'
     model = torchvision.models.densenet121(pretrained=True)
     model.classifier = torch.nn.Linear(2*512, 101)
+    #opt.model = 'BResNet'
+    #model = models.BResNet()
+    opt._parse(kwargs)
     if opt.load_latest :
-        path = 'models/DenseNet121/best.pth'
+        path = 'models/'+opt.model+'/best.pth'
         model.load_state_dict(torch.load(path))
     model.to(opt.device)
     critertion = torch.nn.CrossEntropyLoss()
     lr = opt.lr
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=opt.weight_decay)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer=optimizer, mode='min', factor=opt.lr_decay, verbose=True, min_lr=5e-6, patience=5
+        optimizer=optimizer, mode='min', factor=opt.lr_decay, verbose=True, min_lr=5e-6, patience=3
     )
     train_data = Food(mode='train')
     val_data = Food(mode='val')
-    train_dataloader = DataLoader(train_data, opt.batch_size, shuffle=True, num_workers=opt.num_workers,drop_last=True)
-    val_dataloader = DataLoader(val_data, opt.batch_size, shuffle=False, num_workers=opt.num_workers,drop_last=True)
+    train_dataloader = DataLoader(train_data, opt.batch_size, shuffle=True, num_workers=opt.num_workers)
+    val_dataloader = DataLoader(val_data, opt.batch_size, shuffle=False, num_workers=opt.num_workers)
     best_acc = 0.
     print('Epoch\tTrain loss\tTrain acc\tValid acc')
     for param in model.features.parameters():
         param.requires_grad_(True)
 
     for epoch in range(opt.max_epoch):
-        if epoch == 20:
+        if epoch == 10:
             for param in model.features.parameters():
                 param.requires_grad_(True)
         num_total = 0
@@ -72,7 +75,7 @@ def train(**kwargs):
         scheduler.step(running_loss)
 
         val_acc = val(model, val_dataloader, epoch)
-        print('%d\t%4.3f\t\t%4.2f%%\t%4.2f%%' %
+        print('%d\t%4.3f\t\t%4.2f%%\t\t%4.2f%%' %
               (epoch+1, running_loss, acc_train, val_acc))
 
         if best_acc<val_acc:
