@@ -51,13 +51,14 @@ def train(**kwargs):
 
     #opt.load_latest = True
     #opt.load_model_path = None
-    opt.lr = 1e-4
+    opt.lr = 1e-3
     opt.batch_size = 64
     #opt.model, model = 'ATTDenseNet', models.ATTDenseNet()
     #opt.model, model = 'BResNet', models.BResNet()SliceDenseNet
     #opt.model, model = 'DenseNet90', models.DenseNet()
     #opt.model, model = 'SliceDenseNet', models.SliceDenseNet()
-    opt.model, model = 'SelfBNDenseNet', models.SelfBNDenseNet()
+    #opt.model, model = 'SelfBNDenseNet', models.SelfBNDenseNet()
+    opt.model, model = 'FatSliceDenseNet', models.FatSliceDenseNet()
     opt._parse(kwargs)
     if opt.load_latest :
         path = 'models/'+opt.model+'/best.pth'
@@ -66,9 +67,10 @@ def train(**kwargs):
     critertion = torch.nn.CrossEntropyLoss()
     lr = opt.lr
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=opt.weight_decay)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer=optimizer, mode='min', factor=opt.lr_decay, verbose=True, min_lr=5e-6, patience=3
-    )
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[10,30,50], gamma=0.1)
+    #scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+    #    optimizer=optimizer, mode='min', factor=opt.lr_decay, verbose=True, min_lr=5e-6, patience=3
+    #)
     train_data = Food(mode='train')
     val_data = Food(mode='val')
     train_dataloader = DataLoader(train_data, opt.batch_size, shuffle=True, num_workers=opt.num_workers)
@@ -104,7 +106,7 @@ def train(**kwargs):
         if not os.path.isdir(model_prefix):
             os.mkdir(model_prefix)
         torch.save(model.state_dict(), model_prefix+'latest.pth')
-        scheduler.step(running_loss)
+        scheduler.step()
 
         val_acc = val(model, val_dataloader, epoch)
         print('%d\t%4.3f\t\t%4.2f%%\t\t%4.2f%%' %
