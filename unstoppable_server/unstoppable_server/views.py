@@ -3,9 +3,9 @@ import os
 import time
 from django.shortcuts import render, render_to_response
 from django.views.decorators.csrf import csrf_exempt
-from food_classsifier import get_food_information_by_path
 import json
-from one_click_helper import get_one_click_url
+from .one_click_helper import get_one_click_url
+from .controllers import get_food_information_by_path
 
 
 def index(request):

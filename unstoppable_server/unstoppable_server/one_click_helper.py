@@ -6,7 +6,7 @@ from urllib.parse import quote
 def get_one_click_url(food_name):
     http = urllib3.PoolManager()
     url = "http://www.boohee.com/search?tp=food&key=" + food_name
-    print(url)
+    # print(url)
     # print(quote(url, safe='&/:?='))
     html = http.request("GET", quote(url, safe='&/:?='))
     html_text = html._body.decode("utf-8")
@@ -17,7 +17,7 @@ def get_one_click_url(food_name):
         first_url = "http://www.boohee.com" + first_url
     else:
         first_url = ""
-    print(first_url)
+    # print(first_url)
     return first_url
 
 

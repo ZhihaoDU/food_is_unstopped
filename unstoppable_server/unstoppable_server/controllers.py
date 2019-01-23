@@ -1,9 +1,16 @@
 import os
 import sys
-sys.path.append("..")
-import main
-
 import numpy as np
+# from .food_classsifier import food_classify
+
+
+def food_classify(img_path, num):
+    ret = []
+    for i in range(num):
+        ret.append({"label": np.random.randint(0, 101),
+                    "score": "%.2f" % float(np.random.rand()*100.)})
+    return ret
+
 
 def get_food_information_by_path(img_path, top_num):
     food_label_list = food_classify(img_path, top_num)
@@ -13,14 +20,6 @@ def get_food_information_by_path(img_path, top_num):
         food_info = get_food_information_by_label(label)
         food_information_list.append({**one_food, **food_info})
     return food_information_list
-
-
-def food_classify(img_path, num):
-    label, score = main.test(img_path)
-    ret = []
-    for li, si in zip(label, score):
-        ret.append({"label": int(li), "score": "%.2f" % (float(si)*100)})
-    return ret#[{"label": 1, "score": "90%"}] * num
 
 
 def get_food_information_by_label(label):
@@ -39,5 +38,6 @@ def load_food_dict():
         food_dict[i] = {"name": one_food.split(',')[-1],
                         "en_name": one_food.split(',')[0]}
     return food_dict
+
 
 global_food_dict = load_food_dict()
