@@ -10,7 +10,7 @@ class Food(Dataset):
             self.transform = transforms.Compose([
                 transforms.Resize(size=224),  # Let smaller edge match
                 transforms.RandomHorizontalFlip(),
-                transforms.RandomRotation(10),
+                #transforms.RandomRotation(10),
                 transforms.RandomCrop(size=224),
                 transforms.ToTensor(),
                 transforms.Normalize(mean=(0.485, 0.456, 0.406),

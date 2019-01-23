@@ -15,9 +15,9 @@ import torch.nn as nn
 
 def train(**kwargs):
 
-    opt.load_latest = True
+    #opt.load_latest = True
     #opt.load_model_path = None
-    opt.lr = 0.1
+    opt.lr = 1e-3
     opt.batch_size=32
     opt.model, model = 'ATTDenseNet', models.ATTDenseNet()
     #opt.model, model = 'BResNet', models.BResNet()
