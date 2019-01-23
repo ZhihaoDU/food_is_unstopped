@@ -1,5 +1,6 @@
 # Add tmp file
 *~
+unstoppable_server/.idea
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

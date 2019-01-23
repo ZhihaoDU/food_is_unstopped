@@ -1,0 +1,92 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <title>Foodle</title>
+</head>
+<body>
+<div class="text-center">
+    <br><br>
+    <input type="file" id="file" name="file" style="display:none;" onchange="filechange(event)">
+    <img class="col-xs-15" src="{% static "image/google_logo.png" %}" id="img-change" alt="Please select one food.">
+    <br><br>
+    <div class="row col-md-offset-2">
+        <button id="btn_select" class="btn btn-large btn-default col-xs-12 col-md-9">Food</button>
+    </div><br>
+    <div class="row col-md-offset-4">
+        <button id="btn_upload" class="btn btn-large btn-primary col-xs-3 col-md-2">Go!</button>
+        <div class="col-md-1"></div>
+        <a id="more_info_link" target="_blank" class="btn btn-info col-md-2 col-xs-3">手气不错</a>
+    </div><br><br>
+    <div id="food_info" class="col-md-9 col-md-offset-2">
+
+
+    </div><br>
+
+</div>
+
+
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{% static "javascript/ajaxfileupload.js"%}" type="application/javascript"></script>
+<script type="application/javascript">
+
+    var filechange=function(event){
+        var files = event.target.files, file;
+        if (files && files.length > 0) {
+            file = files[0];
+            if(file.size > 1024 * 1024 * 2) {
+                alert('The selected image is too large(2MB)!');
+                return false;
+            }
+            var URL = window.URL || window.webkitURL;
+            var imgURL = URL.createObjectURL(file);
+            $("#img-change").attr("src",imgURL);
+            $("#img-change").show();
+        }
+    };
+
+    $(document).ready(function(){
+        //$("#img-change").hide();
+        //$("#food_info").hide();
+
+        $("#btn_select").click(function () {
+            $("#file").click();
+            $("#food_info").hide();
+        });
+
+        $("#btn_upload").click(function () {
+            //alert("Try to upload");
+            $.ajaxFileUpload({
+                url: 'upload_file',
+                fileElementId: $("#file").attr('id'),
+                secureuri : false,
+                dataType: 'text',
+                success: function (data){
+                    if ($.isEmptyObject(data)){
+                        alert("Sorry, we can not recognize the food, please try another.")
+                    }
+                    else{
+                        //console.log(data);
+                        data_json = $.parseJSON(data);
+                        //console.log(data_json);
+                        //alert(data_json["name"]);
+                        $("#food_info").fadeIn();
+                        $("#food_name").text(data_json["name"]);
+                        $("#more_info_link").attr("href", data_json["one_click"])
+                        //$("#img-alert").css("display","block");
+                    }
+                },
+                error:function(data,status,e){
+                    alert(e);
+                }
+            });
+        });
+
+    });
+</script>
+</body>
+</html>
