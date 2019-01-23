@@ -6,16 +6,25 @@ import torchvision.transforms as transforms
 
 class Food(Dataset):
     def __init__(self, root_dir='../food-101/', mode='train', transform=None):
-        if transform is None:
-            self.transform = transforms.Compose([
-                transforms.Resize(size=224),  # Let smaller edge match
-                transforms.RandomHorizontalFlip(),
-                #transforms.RandomRotation(10),
-                transforms.RandomCrop(size=224),
-                transforms.ToTensor(),
-                transforms.Normalize(mean=(0.485, 0.456, 0.406),
-                                     std=(0.229, 0.224, 0.225))
-            ])
+        if transform is None :
+            if mode is 'train':
+                self.transform = transforms.Compose([
+                    transforms.RandomHorizontalFlip(),
+                    transforms.RandomRotation(90),
+                    transforms.Resize(size=224),  # Let smaller edge match
+                    transforms.RandomCrop(size=224),
+                    transforms.ToTensor(),
+                    transforms.Normalize(mean=(0.485, 0.456, 0.406),
+                                         std=(0.229, 0.224, 0.225))
+                ])
+            else :
+                self.transform = transforms.Compose([
+                    transforms.Resize(size=224),  # Let smaller edge match
+                    transforms.CenterCrop(size=224),
+                    transforms.ToTensor(),
+                    transforms.Normalize(mean=(0.485, 0.456, 0.406),
+                                         std=(0.229, 0.224, 0.225))
+                ])
         else :
             self.transform = transform
         self.root_dir = root_dir
