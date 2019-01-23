@@ -38,8 +38,6 @@ def train(**kwargs):
     val_dataloader = DataLoader(val_data, opt.batch_size, shuffle=False, num_workers=opt.num_workers)
     best_acc = 0.
     print('Epoch\tTrain loss\tTrain acc\tValid acc')
-    #for param in model.features.parameters():
-    #   param.requires_grad_(False)
     model.freeze_layers(grad=False)
     for epoch in range(opt.max_epoch):
         if epoch == 10:
