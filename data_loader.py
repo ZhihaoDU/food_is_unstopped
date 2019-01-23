@@ -10,7 +10,7 @@ class Food(Dataset):
             if mode is 'train':
                 self.transform = transforms.Compose([
                     transforms.RandomHorizontalFlip(),
-                    transforms.RandomRotation(90),
+                    #transforms.RandomRotation(90),
                     transforms.Resize(size=224),  # Let smaller edge match
                     transforms.RandomCrop(size=224),
                     transforms.ToTensor(),
