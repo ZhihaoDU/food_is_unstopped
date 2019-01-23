@@ -86,10 +86,10 @@ def spp_train(**kwargs):
     #opt.load_latest = True
     #opt.load_model_path = None
     opt.lr = 1e-3
-    opt.batch_size=32
+    opt.batch_size=64
     #opt.model, model = 'ATTDenseNet', models.ATTDenseNet()
     #opt.model, model = 'BResNet', models.BResNet()
-    opt.model, model = 'spp_DenseNet', models.DenseNet()
+    opt.model, model = 'spp_ResNet', models.SPPResNet()
     opt._parse(kwargs)
     if opt.load_latest :
         path = 'models/'+opt.model+'/best.pth'
@@ -99,7 +99,7 @@ def spp_train(**kwargs):
     lr = opt.lr
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=opt.weight_decay)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer=optimizer, mode='min', factor=opt.lr_decay, verbose=True, min_lr=5e-6, patience=3
+        optimizer=optimizer, mode='min', factor=opt.lr_decay, verbose=True, min_lr=5e-6, patience=5
     )
     train_data = Food(mode='train')
     train_data2 = Food(mode='train', transform=transforms.Compose([
@@ -120,7 +120,7 @@ def spp_train(**kwargs):
     val_dataloader = DataLoader(val_data, 1, shuffle=False, num_workers=opt.num_workers)
     best_acc = 0.
     print('Epoch\tTrain loss\tTrain acc\tValid acc')
-    #model.freeze_layers(grad=False)
+    model.freeze_layers(grad=False)
     for epoch in range(opt.max_epoch):
         if epoch == 5:
             model.freeze_layers(grad=True)
@@ -190,4 +190,4 @@ def test(**kwargs):
 if __name__=='__main__':
     #import fire
     #fire.Fire()
-    train()
+    spp_train()

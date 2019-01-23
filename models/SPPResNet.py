@@ -33,7 +33,7 @@ class SPPResNet(torch.nn.Module):
     def forward(self, X):
 
         N = X.size()[0]
-        assert X.size() == (N, 3, 224, 224)
+        #assert X.size() == (N, 3, 224, 224)
         x = self.conv1(X)
         x = self.bn1(x)
         x = self.relu(x)
@@ -46,3 +46,17 @@ class SPPResNet(torch.nn.Module):
         X = SPP(X, [2,1])
         X = self.fc(X)
         return X
+    def freeze_layers(self, grad=False):
+        # Freeze all previous layers.
+        for param in self.conv1.parameters():
+            param.requires_grad_(grad)
+        for param in self.bn1.parameters():
+            param.requires_grad_(grad)
+        for param in self.layer1.parameters():
+            param.requires_grad_(grad)
+        for param in self.layer2.parameters():
+            param.requires_grad_(grad)
+        for param in self.layer3.parameters():
+            param.requires_grad_(grad)
+        for param in self.layer4.parameters():
+            param.requires_grad_(grad)
