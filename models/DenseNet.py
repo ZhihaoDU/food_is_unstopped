@@ -352,9 +352,9 @@ class SSliceDenseNet(torch.nn.Module):
 class FatSliceDenseNet(torch.nn.Module):
     def __init__(self):
         torch.nn.Module.__init__(self)
-        densenet_model = torchvision.models.DenseNet(num_init_features=128, growth_rate=128, block_config=(8, 8, 8))
+        densenet_model = torchvision.models.DenseNet(num_init_features=64, growth_rate=64, block_config=(8, 8, 8))
         self.features = densenet_model.features
-        self.fc = torch.nn.Linear(512+1824, 101)
+        self.fc = torch.nn.Linear(512+912, 101)
         self.slice_conv = nn.Sequential(OrderedDict([
             ('conv0', nn.Conv2d(in_channels=3, out_channels= 512,kernel_size=(5,224),stride=(1, 1), bias=False)),
             ('norm0', nn.BatchNorm2d(512)),
@@ -370,7 +370,7 @@ class FatSliceDenseNet(torch.nn.Module):
         slice = self.slice_conv(X) # N, 512, 1, 1
         X = self.features(X)
         X = F.relu(X, inplace=True)
-        X = F.adaptive_avg_pool2d(X, (1,1)) # N, 1824, 1, 1
+        X = F.adaptive_avg_pool2d(X, (1,1)) # N, 912, 1, 1
         X = torch.cat([X, slice], 1).view(N, -1)
         X = self.fc(X)
         assert X.size() == (N, 101)
