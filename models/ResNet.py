@@ -192,10 +192,10 @@ class DenseNet(torch.nn.Module):
             torch.nn.init.constant_(self.fc.bias.data, val=0)
     def forward(self, X):
         N = X.size()[0]
-        assert X.size() == (N, 3, 448, 448)
+        assert X.size() == (N, 3, 224, 224)
         X = self.features(X) # N, 1024, 14, 14
         X = F.relu(X, inplace=True)
-        X = F.avg_pool2d(X, kernel_size=14, stride=1).view(N, -1)
+        X = F.avg_pool2d(X, kernel_size=7, stride=1).view(N, -1)
         X = self.fc(X)
         assert X.size() == (N, 101)
         return X

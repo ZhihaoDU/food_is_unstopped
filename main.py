@@ -17,10 +17,10 @@ def train(**kwargs):
 
     #opt.load_latest = True
     #opt.load_model_path = None
-    opt.batch_size=24
-    opt.model, model = 'ATTDenseNet', models.ATTDenseNet()
+    opt.batch_size=32
+    #opt.model, model = 'ATTDenseNet', models.ATTDenseNet()
     #opt.model, model = 'BResNet', models.BResNet()
-    #opt.model, model = 'DenseNet448', models.DenseNet()
+    opt.model, model = 'DenseNet224', models.DenseNet()
     opt._parse(kwargs)
     if opt.load_latest :
         path = 'models/'+opt.model+'/best.pth'
