@@ -109,8 +109,9 @@ def train(**kwargs):
         scheduler.step()
 
         val_acc = val(model, val_dataloader, epoch)
-        print('%d\t%4.3f\t\t%4.2f%%\t\t%4.2f%%\t\t'+time.strftime('%H:%M:%S') %
+        print('%d\t%4.3f\t\t%4.2f%%\t\t%4.2f%%\t' %
               (epoch+1, running_loss, acc_train, val_acc))
+        print(time.strftime('%H:%M:%S'))
 
         if best_acc<val_acc:
             best_acc = val_acc
