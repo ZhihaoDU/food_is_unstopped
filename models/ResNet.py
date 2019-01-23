@@ -151,7 +151,7 @@ class ATTDenseNet(torch.nn.Module):
         densenet_model = torchvision.models.densenet121(pretrained=True)
 
         self.features = densenet_model.features
-        self.multi_att = MultiHeadAttention(n_head=4, d_model=1024, d_k=64, d_v=64, dropout=0.1)
+        self.multi_att = MultiHeadAttention(n_head=8, d_model=1024, d_k=64, d_v=64, dropout=0.1)
 
         self.fc = torch.nn.Linear(512*2, 101)
 
