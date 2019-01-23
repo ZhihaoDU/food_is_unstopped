@@ -17,6 +17,7 @@ def train(**kwargs):
 
     #opt.load_latest = True
     #opt.load_model_path = None
+    opt.lr = 0.1
     opt.batch_size=32
     opt.model, model = 'ATTDenseNet', models.ATTDenseNet()
     #opt.model, model = 'BResNet', models.BResNet()
@@ -38,7 +39,7 @@ def train(**kwargs):
     val_dataloader = DataLoader(val_data, opt.batch_size, shuffle=False, num_workers=opt.num_workers)
     best_acc = 0.
     print('Epoch\tTrain loss\tTrain acc\tValid acc')
-    model.freeze_layers(grad=False)
+    #model.freeze_layers(grad=False)
     for epoch in range(opt.max_epoch):
         if epoch == 10:
             model.freeze_layers(grad=True)
