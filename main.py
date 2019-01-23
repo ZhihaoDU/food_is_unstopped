@@ -15,7 +15,7 @@ import torch.nn as nn
 
 def train(**kwargs):
 
-    #opt.load_latest = True
+    opt.load_latest = True
     #opt.load_model_path = None
     opt.lr = 0.1
     opt.batch_size=32
