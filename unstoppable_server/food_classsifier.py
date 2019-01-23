@@ -1,3 +1,5 @@
+import numpy as np
+
 def get_food_information_by_path(img_path, top_num):
     food_label_list = food_classify(img_path, top_num)
     food_information_list = []
@@ -9,17 +11,29 @@ def get_food_information_by_path(img_path, top_num):
 
 
 def food_classify(img_path, num):
-    return [{"label": 1, "score": "90%"}] * num
+    results = []
+    for i in range(num):
+        results.append({"label": int(np.random.randint(0, 101)),
+                        "score": "%.2f" % float(np.random.rand())})
+    return results
 
 
 def get_food_information_by_label(label):
-    food_dict = load_food_dict()
-    if food_dict.get(label) is not None:
-        return food_dict[label]
+    if global_food_dict.get(label) is not None:
+        return global_food_dict[label]
     else:
         return None
 
 
 def load_food_dict():
-    food_dict = {1: {"name": "汉堡包"}}
+    f = open("food_name.csv")
+    raw_list = f.readlines()
+    food_dict = {}
+    for i in range(len(raw_list)):
+        one_food = raw_list[i].replace('\n', '')
+        food_dict[i] = {"name": one_food.split(',')[-1],
+                        "en_name": one_food.split(',')[0]}
     return food_dict
+
+
+global_food_dict = load_food_dict()
