@@ -240,8 +240,6 @@ class BDenseNet(torch.nn.Module):
         # Freeze all previous layers.
         for param in self.features.parameters():
             param.requires_grad_(grad)
-        for param in self.conv.parameters():
-            param.requires_grad_(grad)
 
 
 
