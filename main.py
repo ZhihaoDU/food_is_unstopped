@@ -51,12 +51,13 @@ def train(**kwargs):
 
     #opt.load_latest = True
     #opt.load_model_path = None
-    opt.lr = 1e-3
+    opt.lr = 1e-4
     opt.batch_size = 64
     #opt.model, model = 'ATTDenseNet', models.ATTDenseNet()
     #opt.model, model = 'BResNet', models.BResNet()SliceDenseNet
     #opt.model, model = 'DenseNet90', models.DenseNet()
-    opt.model, model = 'SliceDenseNet', models.SliceDenseNet()
+    #opt.model, model = 'SliceDenseNet', models.SliceDenseNet()
+    opt.model, model = 'SelfBNDenseNet', models.SelfBNDenseNet()
     opt._parse(kwargs)
     if opt.load_latest :
         path = 'models/'+opt.model+'/best.pth'
@@ -76,8 +77,8 @@ def train(**kwargs):
     print('Epoch\tTrain loss\tTrain acc\tValid acc')
     #model.freeze_layers(grad=False)
     for epoch in range(opt.max_epoch):
-        if epoch == 5:
-            model.freeze_layers(grad=True)
+        #if epoch == 5:
+        #    model.freeze_layers(grad=True)
         num_total = 0
         num_correct = 0
         running_loss = 0.
@@ -223,4 +224,4 @@ def val(model, dataloader, epoch):
 if __name__=='__main__':
     #import fire
     #fire.Fire()
-    spp_train()
+    train()
