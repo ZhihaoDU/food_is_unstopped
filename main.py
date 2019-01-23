@@ -52,7 +52,7 @@ def train(**kwargs):
     #opt.load_latest = True
     #opt.load_model_path = None
     opt.lr = 1e-3
-    opt.batch_size = 64
+    opt.batch_size = 32
     #opt.model, model = 'ATTDenseNet', models.ATTDenseNet()
     #opt.model, model = 'BResNet', models.BResNet()SliceDenseNet
     #opt.model, model = 'DenseNet90', models.DenseNet()
@@ -109,7 +109,7 @@ def train(**kwargs):
         scheduler.step()
 
         val_acc = val(model, val_dataloader, epoch)
-        print('%d\t%4.3f\t\t%4.2f%%\t\t%4.2f%%' %
+        print('%d\t%4.3f\t\t%4.2f%%\t\t%4.2f%%\t\t'+time.strftime('%H:%M:%S') %
               (epoch+1, running_loss, acc_train, val_acc))
 
         if best_acc<val_acc:
