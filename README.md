@@ -12,7 +12,7 @@ Contributor 3: Tang Minfang
 ## Environment
 Pytorchpy3
 
-(Tensorflow is good!)
+(Tensorflow is verrry gooooood!)
 ## How to Git
 First time git clone https://github.com/ZhihaoDU/food_is_unstopped.git
 ### Pull
