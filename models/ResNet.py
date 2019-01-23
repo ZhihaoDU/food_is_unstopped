@@ -163,14 +163,14 @@ class ATTDenseNet(torch.nn.Module):
     def forward(self, X):
 
         N = X.size()[0]
-        assert X.size() == (N, 3, 448, 448)
+        assert X.size() == (N, 3, 224, 224)
         x1 = self.features(X) # N, 1024, 7, 7
         x1 = F.relu(x1, inplace=True)
         #print(x1.shape)
         X = x1.view(N, -1, 1024)
         X, att = self.multi_att(X,X,X)
-        X = X.view(N,1024, 14, 14)
-        X = F.avg_pool2d(X, kernel_size=14, stride=1).view(N, -1)
+        X = X.view(N,1024, 7, 7)
+        X = F.avg_pool2d(X, kernel_size=7, stride=1).view(N, -1)
         X = self.fc(X)
         assert X.size() == (N, 101)
         return X
