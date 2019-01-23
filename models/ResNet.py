@@ -153,11 +153,11 @@ class ATTDenseNet(torch.nn.Module):
         self.features = densenet_model.features
         self.multi_att = MultiHeadAttention(n_head=8, d_model=1024, d_k=64, d_v=64, dropout=0.1)
 
-        self.fc = torch.nn.Linear(512*2, 101)
+        self.fc = torch.nn.Linear(512*2*49, 101)
 
         torch.nn.init.kaiming_normal_(self.fc.weight.data)
-        if self.fc.bias is not None:
-            torch.nn.init.constant_(self.fc.bias.data, val=0)
+        #if self.fc.bias is not None:
+        #    torch.nn.init.constant_(self.fc.bias.data, val=0)
 
 
     def forward(self, X):
@@ -169,8 +169,8 @@ class ATTDenseNet(torch.nn.Module):
         #print(x1.shape)
         X = x1.view(N, -1, 1024)
         X, att = self.multi_att(X,X,X)
-        X = X.view(N,1024, 7, 7)
-        X = F.avg_pool2d(X, kernel_size=7, stride=1).view(N, -1)
+        X = X.view(N,1024, 7, 7).view(N, -1)
+        #X = F.avg_pool2d(X, kernel_size=7, stride=1).view(N, -1)
         X = self.fc(X)
         assert X.size() == (N, 101)
         return X
