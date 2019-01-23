@@ -19,16 +19,20 @@
     <div class="row col-md-offset-4">
         <button id="btn_upload" class="btn btn-large btn-primary col-xs-3 col-md-2">Go!</button>
         <div class="col-md-1"></div>
-        <a id="more_info_link" target="_blank" class="btn btn-info col-md-2 col-xs-3">手气不错</a>
+        <a id="btn_one_click" target="_blank" class="btn btn-info col-md-2 col-xs-3">手气不错</a>
     </div><br><br>
-    <div id="food_info" class="list-group col-md-9 col-md-offset-2">
-        <a href="#" class="list-group-item active">
-            <h4 class="list-group-item-heading">List group item heading</h4>
-            <p class="list-group-item-text">...</p>
-        </a>
+</div>
+    <div id="food_result" class="list-group col-md-8 col-md-offset-2">
+        <div class="list-group-item">
+            <h4 class="list-group-item-head">汉堡包</h4>
+            <a href="#"  class="list-group-item-text">了解更多</a>
+        </div>
+        <div class="list-group-item">
+            <h4 class="list-group-item-head">汉堡包</h4>
+            <a href="#"  class="list-group-item-text">了解更多</a>
+        </div>
     </div>
 
-</div>
 
 
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
@@ -52,12 +56,13 @@
     };
 
     $(document).ready(function(){
-        //$("#img-change").hide();
-        //$("#food_info").hide();
+        $("#food_result").empty();
+        $("#food_result").hide();
 
         $("#btn_select").click(function () {
             $("#file").click();
-            $("#food_info").hide();
+            $("#food_result").empty();
+            $("#food_result").hide();
         });
 
         $("#btn_upload").click(function () {
@@ -66,6 +71,7 @@
                 url: 'upload_file',
                 fileElementId: $("#file").attr('id'),
                 secureuri : false,
+                data: {top_num: '5'},
                 dataType: 'text',
                 success: function (data){
                     if ($.isEmptyObject(data)){
@@ -76,10 +82,44 @@
                         data_json = $.parseJSON(data);
                         //console.log(data_json);
                         //alert(data_json["name"]);
-                        $("#food_info").fadeIn();
-                        $("#food_name").text(data_json["name"]);
-                        $("#more_info_link").attr("href", data_json["one_click"])
+                        $("#food_result").empty();
+                        for (var i = 0; i < data_json.length; i++) {
+                            one_food = data_json[i];
+                            //console.log(one_food);
+                            $("#food_result").append('<div class="list-group-item">' +
+                                                     '<h4 class="list-group-item-head">' + one_food['name']  +
+                                                     '<span class="badge col-md-offset-10">'+one_food["score"]+'</span>' + '</h4>' +
+                                                     '<a href="'+one_food["url"]+'"  class="list-group-item-text" target="_black">了解更多'+'</a>' +
+                                                     '</div>');
+                        }
+                        $("#food_result").fadeIn();
+                        //$("#food_name").text(data_json["name"]);
+                        //$("#more_info_link").attr("href", data_json["one_click"])
                         //$("#img-alert").css("display","block");
+                    }
+                },
+                error:function(data,status,e){
+                    alert(e);
+                }
+            });
+        });
+
+
+        $("#btn_one_click").click(function () {
+            //alert("Try to upload");
+            $.ajaxFileUpload({
+                url: 'upload_file',
+                fileElementId: $("#file").attr('id'),
+                secureuri : false,
+                data: {top_num: '1'},
+                dataType: 'text',
+                success: function (data){
+                    if ($.isEmptyObject(data)){
+                        alert("Sorry, we can not recognize the food, please try another.")
+                    }
+                    else{
+                        data_json = $.parseJSON(data);
+                        window.open(data_json[0]["url"], "_blank")
                     }
                 },
                 error:function(data,status,e){

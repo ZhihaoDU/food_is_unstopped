@@ -1,7 +1,10 @@
 # Add tmp file
 *~
+.idea
+.idea/*
 unstoppable_server/.idea
-# Byte-compiled / optimized / DLL files
+unstoppable_server/uploaded_images
+#  Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -109,5 +112,8 @@ venv.bak/
 *.iml
 *.xml
 *.xml
+.idea/workspace.xml
+.idea/workspace.xml
+unstoppable_server/uploaded_images/hbb_2019_01_23_06_39_33.jpeg
 .idea/workspace.xml
 .idea/workspace.xml

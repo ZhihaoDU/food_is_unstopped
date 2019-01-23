@@ -1,11 +1,15 @@
-def get_food_information_by_path(img_path):
-    food_label = food_classify(img_path)
-    food_information = get_food_information_by_label(food_label)
-    return food_information
+def get_food_information_by_path(img_path, top_num):
+    food_label_list = food_classify(img_path, top_num)
+    food_information_list = []
+    for one_food in food_label_list:
+        label = one_food["label"]
+        food_info = get_food_information_by_label(label)
+        food_information_list.append({**one_food, **food_info})
+    return food_information_list
 
 
-def food_classify(img_path):
-    return 1
+def food_classify(img_path, num):
+    return [{"label": 1, "score": "90%"}] * num
 
 
 def get_food_information_by_label(label):

@@ -7,7 +7,7 @@ def get_one_click_url(food_name):
     http = urllib3.PoolManager()
     url = "http://www.boohee.com/search?tp=food&key=" + food_name
     print(url)
-    print(quote(url, safe='&/:?='))
+    # print(quote(url, safe='&/:?='))
     html = http.request("GET", quote(url, safe='&/:?='))
     html_text = html._body.decode("utf-8")
     soup = BeautifulSoup(html_text, 'lxml')
