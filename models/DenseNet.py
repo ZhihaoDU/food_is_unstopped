@@ -206,6 +206,33 @@ class DenseNet(torch.nn.Module):
             param.requires_grad_(grad)
 
 
+class SelfBNDenseNet(torch.nn.Module):
+    def __init__(self):
+        torch.nn.Module.__init__(self)
+        self.input_bn = torch.nn.BatchNorm2d(3, affine=False)
+        densenet_model = torchvision.models.densenet121(pretrained=False)
+        self.features = densenet_model.features
+        self.fc = torch.nn.Linear(512*2, 101)
+
+        torch.nn.init.kaiming_normal_(self.fc.weight.data)
+        if self.fc.bias is not None:
+            torch.nn.init.constant_(self.fc.bias.data, val=0)
+    def forward(self, X):
+        N = X.size()[0]
+        assert X.size() == (N, 3, 224, 224)
+        X = self.input_bn(X)
+        X = self.features(X) # N, 1024, 14, 14
+        X = F.relu(X, inplace=True)
+        X = F.avg_pool2d(X, kernel_size=7, stride=1).view(N, -1)
+        X = self.fc(X)
+        assert X.size() == (N, 101)
+        return X
+    def freeze_layers(self, grad=False):
+        # Freeze all previous layers.
+        for param in self.features.parameters():
+            param.requires_grad_(grad)
+
+
 class BDenseNet(torch.nn.Module):
 
     def __init__(self):
