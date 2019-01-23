@@ -3,7 +3,6 @@ import torch
 from data_loader import *
 from torch.utils.data import DataLoader
 import torchvision
-import torchvision.transforms as transforms
 import models
 from config import opt
 #from torchnet import meter
@@ -12,6 +11,41 @@ import numpy as np
 import time
 import torch.nn.functional as F
 import torch.nn as nn
+from PIL import Image
+import torchvision.transforms as transforms
+
+
+def test(img_path):
+    opt.use_gpu = False
+    #opt._parse()
+    opt.device =torch.device('cuda') if opt.use_gpu else torch.device('cpu')
+    opt.model, model = 'DenseNet', models.DenseNet()
+    path = 'models/'+opt.model+'/best.pth'
+    if opt.use_gpu:
+        model.load_state_dict(torch.load(path))
+    else :
+        model.load_state_dict(torch.load(path,map_location='cpu'))
+    model.to(opt.device)
+
+    transform = transforms.Compose([
+        transforms.Resize(size=224),  # Let smaller edge match
+        transforms.CenterCrop(size=224),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=(0.485, 0.456, 0.406),
+                             std=(0.229, 0.224, 0.225))
+    ])
+    data = Image.open(img_path)
+    data = data.convert('RGB')
+    data = transform(data)
+    data = data.unsqueeze(0)
+    model.eval()
+    input = data.to(opt.device)
+    score = model(input)
+    p, l = torch.sort(-score[0])
+    p = p.cpu().tolist()
+    l = l.cpu().tolist()
+    return l, p
+
 
 def train(**kwargs):
 
@@ -182,8 +216,6 @@ def val(model, dataloader, epoch):
 
 
 
-def test(**kwargs):
-    pass
 
 
 

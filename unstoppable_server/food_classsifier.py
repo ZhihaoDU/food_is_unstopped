@@ -1,3 +1,9 @@
+import os
+import sys
+sys.path.append("..")
+import main
+
+
 def get_food_information_by_path(img_path, top_num):
     food_label_list = food_classify(img_path, top_num)
     food_information_list = []
@@ -9,7 +15,11 @@ def get_food_information_by_path(img_path, top_num):
 
 
 def food_classify(img_path, num):
-    return [{"label": 1, "score": "90%"}] * num
+    label, score = main.test(img_path)
+    ret = []
+    for li, si in zip(label, score):
+        ret.append({"label": int(li), "score": "%.2f" % (float(si)*100)})
+    return ret#[{"label": 1, "score": "90%"}] * num
 
 
 def get_food_information_by_label(label):
@@ -23,3 +33,4 @@ def get_food_information_by_label(label):
 def load_food_dict():
     food_dict = {1: {"name": "汉堡包"}}
     return food_dict
+
