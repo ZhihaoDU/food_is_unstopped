@@ -17,11 +17,11 @@ def train(**kwargs):
 
     #opt.load_latest = True
     #opt.load_model_path = None
-    opt.lr = 0.1
+    opt.lr = 1e-3
     opt.batch_size=32
-    opt.model, model = 'ATTDenseNet', models.ATTDenseNet()
+    #opt.model, model = 'ATTDenseNet', models.ATTDenseNet()
     #opt.model, model = 'BResNet', models.BResNet()
-    #opt.model, model = 'DenseNet224', models.DenseNet()
+    opt.model, model = 'DenseNet90', models.DenseNet()
     opt._parse(kwargs)
     if opt.load_latest :
         path = 'models/'+opt.model+'/best.pth'
@@ -39,9 +39,9 @@ def train(**kwargs):
     val_dataloader = DataLoader(val_data, opt.batch_size, shuffle=False, num_workers=opt.num_workers)
     best_acc = 0.
     print('Epoch\tTrain loss\tTrain acc\tValid acc')
-    #model.freeze_layers(grad=False)
+    model.freeze_layers(grad=False)
     for epoch in range(opt.max_epoch):
-        if epoch == 10:
+        if epoch == 5:
             model.freeze_layers(grad=True)
         num_total = 0
         num_correct = 0
