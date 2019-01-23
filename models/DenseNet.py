@@ -277,3 +277,47 @@ class SliceDenseNet(torch.nn.Module):
         # Freeze all previous layers.
         for param in self.features.parameters():
             param.requires_grad_(grad)
+
+class SSliceDenseNet(torch.nn.Module):
+    def __init__(self):
+        torch.nn.Module.__init__(self)
+        densenet_model = torchvision.models.densenet121(pretrained=True)
+        self.features = densenet_model.features
+        self.fc = torch.nn.Linear(512*2, 101)
+        self.conv = torch.nn.Conv2d(in_channels=1024, out_channels=512, kernel_size=1)
+        self.slice_conv0 = nn.Sequential(OrderedDict([
+            ('conv0', nn.Conv2d(in_channels=3, out_channels= 256,kernel_size=(5,224),
+                                stride=(1, 1), bias=False)),
+            ('norm0', nn.BatchNorm2d(256)),
+            ('relu0', nn.ReLU(inplace=True)),
+            ('pool0', nn.AdaptiveMaxPool2d((1,1))),
+        ]))
+        self.slice_conv1 = nn.Sequential(OrderedDict([
+            ('conv0', nn.Conv2d(in_channels=3, out_channels= 256,kernel_size=(224,5),
+                                stride=(1, 1), bias=False)),
+            ('norm0', nn.BatchNorm2d(256)),
+            ('relu0', nn.ReLU(inplace=True)),
+            ('pool0', nn.AdaptiveMaxPool2d((1,1))),
+        ]))
+        torch.nn.init.kaiming_normal_(self.fc.weight.data)
+        if self.fc.bias is not None:
+            torch.nn.init.constant_(self.fc.bias.data, val=0)
+    def forward(self, X):
+        N = X.size()[0]
+        assert X.size() == (N, 3, 224, 224)
+        slice0 = self.slice_conv0(X) # N, 512, 1, 1
+        slice1 = self.slice_conv1(X) # N, 512, 1, 1
+        X = self.features(X) # N, 1024, 14, 14
+        X = self.conv(X)
+        X = F.relu(X, inplace=True)
+        X = F.avg_pool2d(X, kernel_size=7, stride=1)
+        X = torch.cat([X, slice0, slice1], 1).view(N, -1)
+        X = self.fc(X)
+        assert X.size() == (N, 101)
+        return X
+    def freeze_layers(self, grad=False):
+        # Freeze all previous layers.
+        for param in self.features.parameters():
+            param.requires_grad_(grad)
+
+
