@@ -203,3 +203,41 @@ class DenseNet(torch.nn.Module):
         # Freeze all previous layers.
         for param in self.features.parameters():
             param.requires_grad_(grad)
+
+
+class BDenseNet(torch.nn.Module):
+
+    def __init__(self):
+        torch.nn.Module.__init__(self)
+        densenet_model = torchvision.models.densenet121(pretrained=True)
+        self.features = densenet_model.features
+        self.conv = torch.nn.Conv2d(in_channels=1024, out_channels=512, kernel_size=1)
+        # Linear classifier.
+        self.fc = torch.nn.Linear(512**2, 101)
+
+        torch.nn.init.kaiming_normal_(self.fc.weight.data)
+        if self.fc.bias is not None:
+            torch.nn.init.constant_(self.fc.bias.data, val=0)
+    def forward(self, X):
+
+        N = X.size()[0]
+        assert X.size() == (N, 3, 224, 224)
+        X = self.features(X)
+        X = self.conv(X)
+        X = F.relu(X, inplace=True)
+        assert X.size() == (N, 512, 7, 7)
+        X = X.view(N, 512, 7**2)
+        X = torch.bmm(X, torch.transpose(X, 1, 2)) / (7**2)  # Bilinear
+        assert X.size() == (N, 512, 512)
+        X = X.view(N, 512**2)
+        X = torch.sqrt(X + 1e-5)
+        X = torch.nn.functional.normalize(X)
+        X = self.fc(X)
+        assert X.size() == (N, 101)
+        return X
+    def freeze_layers(self, grad=False):
+        # Freeze all previous layers.
+        for param in self.features.parameters():
+            param.requires_grad_(grad)
+        for param in self.conv.parameters():
+            param.requires_grad_(grad)
