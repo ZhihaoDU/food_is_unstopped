@@ -62,11 +62,13 @@ def train(**kwargs):
     opt._parse(kwargs)
     if opt.load_latest :
         path = 'models/'+opt.model+'/latest.pth'
+        #model, optimizer = load_check_points(model, optimizer, path)
         model.load_state_dict(torch.load(path))
     model.to(opt.device)
     critertion = torch.nn.CrossEntropyLoss()
     lr = opt.lr
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=opt.weight_decay)
+
     scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[50], gamma=0.1)
     #scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
     #    optimizer=optimizer, mode='min', factor=opt.lr_decay, verbose=True, min_lr=5e-6, patience=3
@@ -105,7 +107,9 @@ def train(**kwargs):
         model_prefix = 'models/'+opt.model+'/'
         if not os.path.isdir(model_prefix):
             os.mkdir(model_prefix)
+        #check_points(model, optimizer, time.strftime(model_prefix + '%m%d_%H:%M:%S.pth'))
         torch.save(model.state_dict(), time.strftime(model_prefix + '%m%d_%H:%M:%S.pth'))
+        #check_points(model, optimizer, model_prefix+'latest.pth')
         torch.save(model.state_dict(), model_prefix+'latest.pth')
         scheduler.step()
 
@@ -119,8 +123,18 @@ def train(**kwargs):
             torch.save(model.state_dict(), model_prefix+'best.pth')
             print('*****************BEST*****************')
     print('Best at epoch %d, test accuaray %f' % (epoch, best_acc))
+'''
+def check_points(model, optimizer, path):
+    info = {"model": model.state_dict(),
+            "optimizer": optimizer.state_dict()}
+    torch.save(info, path)
 
-
+def load_check_points(model, optimizer, path):
+    dic = torch.load(path)
+    model.load_state_dict(dic['model'])
+    optimizer.load_state_dict(dic['optimizer'])
+    return model, optimizer
+'''
 def spp_train(**kwargs):
 
     #opt.load_latest = True
