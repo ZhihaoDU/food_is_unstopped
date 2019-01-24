@@ -61,7 +61,7 @@ def train(**kwargs):
     #opt.model, model = 'FatSliceDenseNet', models.FatSliceDenseNet()
     opt._parse(kwargs)
     if opt.load_latest :
-        path = 'models/'+opt.model+'/best.pth'
+        path = 'models/'+opt.model+'/latest.pth'
         model.load_state_dict(torch.load(path))
     model.to(opt.device)
     critertion = torch.nn.CrossEntropyLoss()
