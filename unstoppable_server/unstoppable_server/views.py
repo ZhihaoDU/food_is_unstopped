@@ -33,7 +33,7 @@ def upload_file(request):
             with open(file_name, 'wb+') as f:
                 for chunk in uploaded_image.chunks():
                     f.write(chunk)
-
+            print("Get image from client and save to %s, excepted top-%d" % (file_name, top_num))
             food_info_list = get_food_information_by_path(file_name, top_num)
             if len(food_info_list) > 0:
                 for food_info in food_info_list:
