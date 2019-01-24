@@ -1,12 +1,13 @@
 import os
 import sys
+sys.path.append('../../')
 import main
 import numpy as np
 import torchvision.transforms as transforms
 import torch
 import models
 
-sys.path.append('../../')
+
 from config import opt
 
 
