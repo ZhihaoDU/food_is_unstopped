@@ -16,6 +16,7 @@ import torchvision.transforms as transforms
 
 
 def test(img_path, model, test_opt):
+    print('img_path is '+ str(img_path))
     transform = transforms.Compose([
         transforms.Resize(size=224),  # Let smaller edge match
         transforms.CenterCrop(size=224),
