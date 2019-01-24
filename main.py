@@ -15,18 +15,7 @@ from PIL import Image
 import torchvision.transforms as transforms
 
 
-def test(img_path):
-    opt.use_gpu = False
-    #opt._parse()
-    opt.device =torch.device('cuda') if opt.use_gpu else torch.device('cpu')
-    opt.model, model = 'DenseNet', models.DenseNet()
-    path = 'models/'+opt.model+'/best.pth'
-    if opt.use_gpu:
-        model.load_state_dict(torch.load(path))
-    else :
-        model.load_state_dict(torch.load(path,map_location='cpu'))
-    model.to(opt.device)
-
+def test(img_path, model, test_opt):
     transform = transforms.Compose([
         transforms.Resize(size=224),  # Let smaller edge match
         transforms.CenterCrop(size=224),
@@ -34,16 +23,20 @@ def test(img_path):
         transforms.Normalize(mean=(0.485, 0.456, 0.406),
                              std=(0.229, 0.224, 0.225))
     ])
+
     data = Image.open(img_path)
     data = data.convert('RGB')
     data = transform(data)
     data = data.unsqueeze(0)
     model.eval()
-    input = data.to(opt.device)
+    input = data.to(test_opt.device)
     score = model(input)
     p, l = torch.sort(-score[0])
+    p = torch.nn.functional.softmax(-p, dim=0)
     p = p.cpu().tolist()
     l = l.cpu().tolist()
+    #print(l)
+    #print(p)
     return l, p
 
 
