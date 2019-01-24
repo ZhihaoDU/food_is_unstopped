@@ -1,12 +1,13 @@
 import os
 import sys
+sys.path.append('../')
 import main
 import numpy as np
 import torchvision.transforms as transforms
 import torch
 import models
 
-sys.path.append('../../')
+
 from config import opt
 
 
@@ -15,7 +16,7 @@ opt.use_gpu = True
 #opt._parse()
 opt.device = torch.device('cuda') if opt.use_gpu else torch.device('cpu')
 opt.model, model = 'SliceDenseNet', models.SliceDenseNet()
-path = '../../models/'+opt.model+'/SliceDenseNet_best.pth'
+path = '../models/'+opt.model+'/SliceDenseNet_best.pth'
 if opt.use_gpu:
     model.load_state_dict(torch.load(path))
 else :
