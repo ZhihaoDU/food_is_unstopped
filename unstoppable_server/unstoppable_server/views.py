@@ -19,7 +19,7 @@ def hello(request):
 @csrf_exempt
 def upload_file(request):
     if request.method == "POST":
-        uploaded_image = request.FILES.get("file", None)
+        uploaded_image = request.FILES.get("file")
         top_num = int(request.POST.get("top_num"))
         if uploaded_image is None:
             return HttpResponse("No uploaded image.")
@@ -27,9 +27,8 @@ def upload_file(request):
             if not os.path.exists("uploaded_images"):
                 os.mkdir("uploaded_images")
 
-            file_name = "uploaded_images/%s_%s.%s" % (uploaded_image.name.split(".")[0],
-                                                      time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime(time.time())),
-                                                      uploaded_image.name.split(".")[-1])
+            file_name = "uploaded_images/%s.%s" % (time.strftime('%Y_%m_%d_%H_%M_%S', time.localtime(time.time())),
+                                                   uploaded_image.content_type.split("/")[-1])
 
             with open(file_name, 'wb+') as f:
                 for chunk in uploaded_image.chunks():

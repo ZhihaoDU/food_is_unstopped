@@ -1,0 +1,101 @@
+Apple pie,苹果派
+Baby back ribs,小排骨
+Baklava,千层酥
+Beef carpaccio,生牛肉薄片
+Beef tartare,鞑靼牛肉
+Beet salad,沙拉
+Beignets,法式甜甜圈
+Bibimbap,石锅拌饭
+Bread pudding,面包布丁
+Breakfast burrito,早餐卷饼
+Bruschetta,烤面包片
+Caesar salad,沙拉
+Cannoli,卡诺里卷
+Caprese salad,沙拉
+Carrot cake,蛋糕
+Ceviche,腌鱼
+Cheesecake,蛋糕
+Cheese plate,干酪盘
+Chicken curry,咖喱鸡肉
+Chicken quesadilla,鸡肉饼
+Chicken wings,鸡翅
+Chocolate cake,巧克力蛋糕
+Chocolate mousse,巧克力慕斯
+Churros,油条
+Clam chowder,海鲜奶油浓汤
+Club sandwich,三明治
+Crab cakes,蟹肉饼
+Creme brulee,布丁
+Croque madame,三明治
+Cup cakes,蛋糕
+Deviled eggs,魔鬼蛋
+Donuts,油炸圈饼
+Dumplings,饺子
+Edamame,毛豆
+Eggs benedict,火腿蛋松饼
+Escargots,法国蜗牛
+Falafel,三明治
+Filet mignon,菲力牛排
+Fish and chips,炸鱼薯条
+Foie gras,肥鹅肝
+French fries,薯条
+French onion soup,法式洋葱汤
+French toast,吐司
+Fried calamari,炸鱿鱼
+Fried rice,炒饭
+Frozen yogurt,冻酸奶
+Garlic bread,面包
+Gnocchi,汤团
+Greek salad,沙拉
+Grilled cheese sandwich,三明治
+Grilled salmon,烤鲑鱼
+Guacamole,牛油果酱
+Gyoza,饺子
+Hamburger,汉堡包
+Hot and sour soup,酸辣汤
+Hot dog,热狗
+Huevos rancheros,煎蛋
+Hummus,鹰嘴豆泥
+Ice cream,冰激凌
+Lasagna,千层面
+Lobster bisque,龙虾奶油浓汤
+Lobster roll sandwich,三明治
+Macaroni and cheese,芝士通心粉
+Macarons,马卡龙
+Miso soup,味增汤
+Mussels,青口贝
+Nachos,玉米片
+Omelette,煎蛋
+Onion rings,洋葱圈
+Oysters,生蚝
+Pad thai,泰式炒粉
+Paella,炒饭
+Pancakes,烙饼
+Panna cotta,意式奶冻
+Peking duck,北京烤鸭
+Pho,越南米粉
+Pizza,披萨
+Pork chop,猪排
+Poutine,薯条
+Prime rib,牛排
+Pulled pork sandwich,三明治
+Ramen,拉面
+Ravioli,馄饨
+Red velvet cake,蛋糕
+Risotto,烩饭
+Samosa,萨莫萨三角饺
+Sashimi,生鱼片
+Scallops,扇贝
+Seaweed salad,沙拉
+Shrimp and grits,虾和粉打窝沙食
+Spaghetti bolognese,意大利面
+Spaghetti carbonara,意大利面
+Spring rolls,春卷
+Steak,牛扒
+Strawberry shortcake,草莓脆饼
+Sushi,寿司
+Tacos,玉米饼
+Takoyaki,章鱼烧
+Tiramisu,提拉米苏
+Tuna tartare,鞑靼金枪鱼
+Waffles,威化饼

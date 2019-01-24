@@ -30,7 +30,7 @@ def get_food_information_by_label(label):
 
 
 def load_food_dict():
-    f = open("food_name.csv")
+    f = open("food_name.txt")
     raw_list = f.readlines()
     food_dict = {}
     for i in range(len(raw_list)):

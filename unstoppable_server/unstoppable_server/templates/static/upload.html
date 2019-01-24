@@ -38,7 +38,10 @@
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="{% static "javascript/ajaxfileupload.js"%}" type="application/javascript"></script>
+<script src="{% static "javascript/ImageResizer.js"%}" type="application/javascript"></script>
 <script type="application/javascript">
+
+    var img_blob;
 
     var filechange=function(event){
         var files = event.target.files, file;
@@ -49,15 +52,39 @@
                 return false;
             }
             var URL = window.URL || window.webkitURL;
-            var imgURL = URL.createObjectURL(file);
-            $("#img-change").attr("src",imgURL);
-            $("#img-change").show();
+            img = new Image();
+            img.onload = function () {
+                //console.log(this.width + " " + this.height);
+                if (this.width > this.height){
+                    re_width = 10000;
+                    re_height = 224;
+                }
+                else{
+                    re_width = 224;
+                    re_height = 10000;
+                }
+                // make smaller size match 224
+                //console.log(re_width, ' ', re_height);
+                ImageTools.resize(event.target.files[0], {
+                    width: re_width, // maximum width
+                    height: re_height // maximum height
+                }, function(blob, didItResize) {
+                    // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
+                    img_blob = blob;
+                    imgURL = URL.createObjectURL(blob);
+                    $("#img-change").attr("src",imgURL);
+                    $("#img-change").show();
+                    // you can also now upload this blob using an XHR.
+                });
+            };
+            img.src = URL.createObjectURL(file);
         }
     };
 
     $(document).ready(function(){
         $("#food_result").empty();
         $("#food_result").hide();
+
 
         $("#btn_select").click(function () {
             $("#file").click();
@@ -66,65 +93,63 @@
         });
 
         $("#btn_upload").click(function () {
-            //alert("Try to upload");
-            $.ajaxFileUpload({
+            //console.log("Try to upload");
+
+            var fd = new FormData();
+            fd.append('top_num', '5');
+            fd.append('file', img_blob);
+            $.ajax({
+                type: 'POST',
                 url: 'upload_file',
-                fileElementId: $("#file").attr('id'),
-                secureuri : false,
-                data: {top_num: '5'},
-                dataType: 'text',
-                success: function (data){
-                    if ($.isEmptyObject(data)){
-                        alert("Sorry, we can not recognize the food, please try another.")
-                    }
-                    else{
-                        //console.log(data);
-                        data_json = $.parseJSON(data);
-                        //console.log(data_json);
-                        //alert(data_json["name"]);
-                        $("#food_result").empty();
-                        for (var i = 0; i < data_json.length; i++) {
-                            one_food = data_json[i];
-                            //console.log(one_food);
-                            $("#food_result").append('<div class="list-group-item">' +
-                                                     '<h4 class="list-group-item-head">' + one_food['name']  +
-                                                     '<span class="badge" style="float:right;">'+one_food["score"]+'</span>' + '</h4>' +
-                                                     '<a href="'+one_food["url"]+'"  class="list-group-item-text" target="_black">了解更多'+'</a>' +
-                                                     '</div>');
-                        }
-                        $("#food_result").fadeIn();
-                        //$("#food_name").text(data_json["name"]);
-                        //$("#more_info_link").attr("href", data_json["one_click"])
-                        //$("#img-alert").css("display","block");
-                    }
-                },
-                error:function(data,status,e){
-                    alert(e);
+                data: fd,
+                processData: false,
+                contentType: false
+            }).done(function(data) {
+                //console.log(data);
+            }).success(function (data) {
+                //console.log(data);
+                data_json = $.parseJSON(data);
+                $("#food_result").empty();
+                for (var i = 0; i < data_json.length; i++) {
+                    one_food = data_json[i];
+                    $("#food_result").append('<div class="list-group-item">' +
+                        '<h4 class="list-group-item-head">' + one_food['name']  +
+                        '<span class="badge" style="float:right;">'+one_food["score"]+'</span>' + '</h4>' +
+                        '<a href="'+one_food["url"]+'"  class="list-group-item-text" target="_black">了解更多'+'</a>' +
+                        '</div>');
                 }
+                $("#food_result").fadeIn();
+            }).error(function(data, status, e){
+                console.log(status, data, e)
             });
+
         });
 
 
         $("#btn_one_click").click(function () {
             //alert("Try to upload");
-            $.ajaxFileUpload({
+
+            var fd = new FormData();
+            fd.append('top_num', '1');
+            fd.append('file', img_blob);
+            $.ajax({
+                type: 'POST',
                 url: 'upload_file',
-                fileElementId: $("#file").attr('id'),
-                secureuri : false,
-                data: {top_num: '1'},
-                dataType: 'text',
-                success: function (data){
-                    if ($.isEmptyObject(data)){
-                        alert("Sorry, we can not recognize the food, please try another.")
-                    }
-                    else{
-                        data_json = $.parseJSON(data);
-                        window.open(data_json[0]["url"], "_blank")
-                    }
-                },
-                error:function(data,status,e){
-                    alert(e);
+                data: fd,
+                processData: false,
+                contentType: false
+            }).done(function(data) {
+                //console.log(data);
+            }).success(function (data) {
+                if ($.isEmptyObject(data)){
+                    alert("Sorry, we can not recognize the food, please try another.")
                 }
+                else{
+                    data_json = $.parseJSON(data);
+                    window.open(data_json[0]["url"], "_blank")
+                }
+            }).error(function(data, status, e){
+                console.log(status, data, e)
             });
         });
 
