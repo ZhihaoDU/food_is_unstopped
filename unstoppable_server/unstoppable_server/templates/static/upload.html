@@ -120,7 +120,7 @@
 
 
         $("#btn_one_click").click(function () {
-            alert("Try to upload");
+            //alert("Try to upload");
 
             var fd = new FormData();
             fd.append('top_num', '1');
@@ -139,7 +139,7 @@
                 }
                 else{
                     data_json = $.parseJSON(data);
-                    alert("get food" + data_json[0]['name']);
+                    //alert("get food" + data_json[0]['name']);
                     window.open(data_json[0]["url"], "_blank")
                 }
             }).error(function(data, status, e){
