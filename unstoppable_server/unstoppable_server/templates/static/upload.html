@@ -23,14 +23,7 @@
     </div><br><br>
 </div>
     <div id="food_result" class="list-group col-md-8 col-md-offset-2">
-        <div class="list-group-item">
-            <h4 class="list-group-item-head">汉堡包</h4>
-            <a href="#"  class="list-group-item-text">了解更多</a>
-        </div>
-        <div class="list-group-item">
-            <h4 class="list-group-item-head">汉堡包</h4>
-            <a href="#"  class="list-group-item-text">了解更多</a>
-        </div>
+
     </div>
 
 
@@ -47,7 +40,7 @@
         var files = event.target.files, file;
         if (files && files.length > 0) {
             file = files[0];
-            if(file.size > 1024 * 1024 * 2) {
+            if(file.size > 1024 * 1024 * 20) {
                 alert('The selected image is too large(2MB)!');
                 return false;
             }
@@ -127,7 +120,7 @@
 
 
         $("#btn_one_click").click(function () {
-            //alert("Try to upload");
+            alert("Try to upload");
 
             var fd = new FormData();
             fd.append('top_num', '1');
@@ -146,6 +139,7 @@
                 }
                 else{
                     data_json = $.parseJSON(data);
+                    alert("get food" + data_json[0]['name']);
                     window.open(data_json[0]["url"], "_blank")
                 }
             }).error(function(data, status, e){
