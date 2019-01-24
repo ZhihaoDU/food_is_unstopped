@@ -13,20 +13,20 @@
     <input type="file" id="file" name="file" style="display:none;" onchange="filechange(event)">
     <img class="col-xs-15" src="{% static "image/google_logo.png" %}" id="img-change" alt="Please select one food.">
     <br><br>
-    <div class="row col-md-offset-2">
-        <button id="btn_select" class="btn btn-large btn-default col-xs-12 col-md-9">Food</button>
-    </div><br>
-    <div class="row col-md-offset-4">
-        <button id="btn_upload" class="btn btn-large btn-primary col-xs-3 col-md-2">Go!</button>
-        <div class="col-md-1"></div>
-        <a id="btn_one_click" target="_blank" class="btn btn-info col-md-2 col-xs-3">手气不错</a>
+    <div>
+        <button id="btn_select" class="btn btn-large btn-default" style="width: 50%">Upload Food</button>
     </div><br><br>
-</div>
-    <div id="food_result" class="list-group col-md-8 col-md-offset-2">
+    <div>
+        <button id="btn_upload" class="btn btn-large btn-primary" style="width: 25%">Go!</button>
+
+        <a id="btn_one_click" target="_blank" class="btn btn-info" style="width: 25%">手气不错</a>
+    </div><br><br>
+
+    <div id="food_result" class="list-group col-md-8">
 
     </div>
-
-
+</div>
+<a style="display: none" href="" id="one_click_helper" target="_blank"></a>
 
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -139,8 +139,12 @@
                 }
                 else{
                     data_json = $.parseJSON(data);
+                    $("#one_click_helper").attr("href", data_json[0]["url"]);
+                    document.getElementById("one_click_helper").click();
+                    //$("#one_click_helper").click();
                     //alert("get food" + data_json[0]['name']);
-                    window.open(data_json[0]["url"], "_blank")
+                    //window.location.href=data_json[0]["url"];
+                    //window.open(data_json[0]["url"], "_blank")
                 }
             }).error(function(data, status, e){
                 console.log(status, data, e)
