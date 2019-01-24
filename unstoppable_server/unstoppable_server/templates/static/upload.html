@@ -11,18 +11,18 @@
 <div class="text-center">
     <br><br>
     <input type="file" id="file" name="file" style="display:none;" onchange="filechange(event)">
-    <img class="col-xs-15" src="{% static "image/google_logo.png" %}" id="img-change" alt="Please select one food.">
+    <img class="col-xs-15" src="{% static "image/google_logo.png" %}" id="img-change" alt="Please select one food." style="width: 80%">
     <br><br>
     <div>
-        <button id="btn_select" class="btn btn-large btn-default" style="width: 50%">Upload Food</button>
+        <button id="btn_select" class="btn btn-large btn-default" style="width: 80%">Upload Food</button>
     </div><br><br>
     <div>
-        <button id="btn_upload" class="btn btn-large btn-primary" style="width: 25%">Go!</button>
+        <button id="btn_upload" class="btn btn-large btn-primary" style="width: 40%">Go!</button>
 
-        <a id="btn_one_click" target="_blank" class="btn btn-info" style="width: 25%">手气不错</a>
+        <a id="btn_one_click" target="_blank" class="btn btn-info" style="width: 40%">手气不错</a>
     </div><br><br>
 </div>
-<div id="food_result" class="list-group col-center-block" style="width: 50%">
+<div id="food_result" class="list-group col-center-block" style="width: 80%">
 
 </div>
 <a style="display: none" href="" id="one_click_helper" target="_blank"></a>
@@ -147,11 +147,11 @@
                 }
                 else{
                     data_json = $.parseJSON(data);
-                    $("#one_click_helper").attr("href", data_json[0]["url"]);
-                    document.getElementById("one_click_helper").click();
+                    //$("#one_click_helper").attr("href", data_json[0]["url"]);
+                    //document.getElementById("one_click_helper").click();
                     //$("#one_click_helper").click();
                     //alert("get food" + data_json[0]['name']);
-                    //window.location.href=data_json[0]["url"];
+                    window.location.href=data_json[0]["url"];
                     //window.open(data_json[0]["url"], "_blank")
                 }
             }).error(function(data, status, e){
