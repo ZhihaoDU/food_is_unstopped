@@ -2,21 +2,21 @@ import os
 import sys
 import numpy as np
 # from one_click_helper import get_one_click_url
-# from .food_classsifier import food_classify
+from .food_classsifier import food_classify
 
 
-def food_classify(img_path, num):
-    ret = []
-    for i in range(num):
-        ret.append({"label": np.random.randint(0, 101),
-                    "score": "%.2f" % float(np.random.rand()*100.)})
-    return ret
+# def food_classify(img_path, num):
+#     ret = []
+#     for i in range(num):
+#         ret.append({"label": np.random.randint(0, 101),
+#                     "score": "%.2f" % float(np.random.rand()*100.)})
+#     return ret
 
 
 def get_food_information_by_path(img_path, top_num):
     print("Call food classify...")
-    # food_label_list = food_classify(img_path)[:top_num]
-    food_label_list = food_classify(img_path, top_num)
+    food_label_list = food_classify(img_path)[:top_num]
+    # food_label_list = food_classify(img_path, top_num)
     print("Result length: %d" % len(food_label_list))
     print(food_label_list)
     food_information_list = []
