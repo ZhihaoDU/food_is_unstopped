@@ -37,10 +37,10 @@ def upload_file(request):
             food_info_list = get_food_information_by_path(file_name, top_num)
             if len(food_info_list) > 0:
                 for food_info in food_info_list:
-                    print("Try to get info for %s" % food_info["name"])
-                    food_url = get_one_click_url(food_info["name"])
-                    food_info["url"] = food_url
-                    print("Get url for %s successfully: %s" % (food_info["name"], food_url))
+                    # print("Try to get info for %s" % food_info["name"])
+                    food_url = food_info["url"]
+                    # food_info["url"] = food_url
+                    # print("Get url for %s successfully: %s" % (food_info["name"], food_url))
                 food_json = json.dumps(food_info_list)
                 return HttpResponse(food_json)
             else:

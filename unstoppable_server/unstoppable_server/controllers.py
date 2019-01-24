@@ -1,6 +1,7 @@
 import os
 import sys
 import numpy as np
+# from one_click_helper import get_one_click_url
 from .food_classsifier import food_classify
 
 
@@ -34,14 +35,17 @@ def get_food_information_by_label(label):
 
 
 def load_food_dict():
-    f = open("food_name.txt")
+    f = open("food_info.txt")
     raw_list = f.readlines()
     food_dict = {}
     for i in range(len(raw_list)):
         one_food = raw_list[i].replace('\n', '')
-        food_dict[i] = {"name": one_food.split(',')[-1],
-                        "en_name": one_food.split(',')[0]}
+        en_name, name, url = one_food.split(',')
+        food_dict[i] = {"name": name,
+                        "en_name": en_name,
+                        "url": url}
     return food_dict
 
 
 global_food_dict = load_food_dict()
+

@@ -1,0 +1,101 @@
+Apple pie, 苹果派, http://101.132.162.63/shiwu/pingguo_junzhi
+Baby back ribs, 小排骨, http://101.132.162.63/shiwu/zhuxiaopai
+Baklava, 千层酥, http://101.132.162.63/shiwu/qiancengbing
+Beef carpaccio, 生牛肉薄片, http://101.132.162.63/shiwu/jiangniurou
+Beef tartare, 鞑靼牛肉, http://101.132.162.63/shiwu/jiangniurou
+Beet salad, 沙拉, http://101.132.162.63/shiwu/selayou
+Beignets, 法式甜甜圈, http://101.132.162.63/shiwu/yuanweitiantianquan
+Bibimbap, 石锅拌饭, http://101.132.162.63/shiwu/wuhuaroushiguobanfan
+Bread pudding, 面包布丁, http://101.132.162.63/shiwu/mianbao_junzhi
+Breakfast burrito, 早餐卷饼, http://101.132.162.63/shiwu/zaocannai
+Bruschetta, 烤面包片, http://101.132.162.63/shiwu/WHOLEhiWHEATmianbaopian
+Caesar salad, 沙拉, http://101.132.162.63/shiwu/selayou
+Cannoli, 卡诺里卷, http://101.132.162.63/shiwu/kanuoli
+Caprese salad, 沙拉, http://101.132.162.63/shiwu/selayou
+Carrot cake, 蛋糕, http://101.132.162.63/shiwu/dangao_huangdangao
+Ceviche, 腌鱼, http://101.132.162.63/shiwu/fd6ef8ab
+Cheesecake, 蛋糕, http://101.132.162.63/shiwu/dangao_huangdangao
+Cheese plate, 干酪盘, http://101.132.162.63/shiwu/sanmingzhi_jiahuotui_jidan
+Chicken curry, 咖喱鸡肉, http://101.132.162.63/shiwu/kalijirou_shaorouwuyou
+Chicken quesadilla, 鸡肉饼, http://101.132.162.63/shiwu/roubing
+Chicken wings, 鸡翅, http://101.132.162.63/shiwu/jichi
+Chocolate cake, 巧克力蛋糕, http://101.132.162.63/shiwu/dangao_qiaokeli
+Chocolate mousse, 巧克力慕斯, http://101.132.162.63/shiwu/qiaokelimusi
+Churros, 油条, http://101.132.162.63/shiwu/youtiao
+Clam chowder, 海鲜奶油浓汤, http://101.132.162.63/shiwu/naiyouhaixiantang
+Club sandwich, 三明治, http://101.132.162.63/shiwu/sanmingzhi_jiahuotui_jidan
+Crab cakes, 蟹肉饼, http://101.132.162.63/shiwu/roubing
+Creme brulee, 布丁, http://101.132.162.63/shiwu/jidanbuding
+Croque madame, 三明治, http://101.132.162.63/shiwu/sanmingzhi_jiahuotui_jidan
+Cup cakes, 蛋糕, http://101.132.162.63/shiwu/dangao_huangdangao
+Deviled eggs, 魔鬼蛋, http://101.132.162.63/shiwu/moguidan
+Donuts, 油炸圈饼, http://101.132.162.63/shiwu/huashengren_youzha
+Dumplings, 饺子, http://101.132.162.63/shiwu/jiaozi_zhuroubaicaixian
+Edamame, 毛豆, http://101.132.162.63/shiwu/maodou
+Eggs benedict, 火腿蛋松饼, http://101.132.162.63/shiwu/huotui
+Escargots, 法国蜗牛, http://101.132.162.63/shiwu/faguowoniu
+Falafel, 三明治, http://101.132.162.63/shiwu/sanmingzhi_jiahuotui_jidan
+Filet mignon, 菲力牛排, http://101.132.162.63/shiwu/heijiaoniupai
+Fish and chips, 炸鱼薯条, http://101.132.162.63/shiwu/shutiao_kendeji
+Foie gras, 肥鹅肝, http://101.132.162.63/shiwu/qianchujuxiangmifeigan
+French fries, 薯条, http://101.132.162.63/shiwu/shutiao_kendeji
+French onion soup, 法式洋葱汤, http://101.132.162.63/shiwu/yangcong
+French toast, 吐司, http://101.132.162.63/shiwu/zizhitusi
+Fried calamari, 炸鱿鱼, http://101.132.162.63/shiwu/youyu_gan
+Fried rice, 炒饭, http://101.132.162.63/shiwu/shijinchaofan
+Frozen yogurt, 冻酸奶, http://101.132.162.63/shiwu/suannai_junzhi
+Garlic bread, 面包, http://101.132.162.63/shiwu/mianbao_junzhi
+Gnocchi, 汤团, http://101.132.162.63/shiwu/zhimatangtuan
+Greek salad, 沙拉, http://101.132.162.63/shiwu/selayou
+Grilled cheese sandwich, 三明治, http://101.132.162.63/shiwu/sanmingzhi_jiahuotui_jidan
+Grilled salmon, 烤鲑鱼, http://101.132.162.63/shiwu/yankaosanwenyu
+Guacamole, 牛油果酱, http://101.132.162.63/shiwu/niuyou
+Gyoza, 饺子, http://101.132.162.63/shiwu/jiaozi_zhuroubaicaixian
+Hamburger, 汉堡包, http://101.132.162.63/shiwu/hanbaobao_putongxing_jiaroubing_jiadiaoliaojiangheshucai
+Hot and sour soup, 酸辣汤, http://101.132.162.63/shiwu/suanlatang2
+Hot dog, 热狗, http://101.132.162.63/shiwu/regouchang
+Huevos rancheros, 煎蛋, http://101.132.162.63/shiwu/xiangchunjiandan
+Hummus, 鹰嘴豆泥, http://101.132.162.63/shiwu/yingzuidou_taodou
+Ice cream, 冰激凌, http://101.132.162.63/shiwu/bingqilin
+Lasagna, 千层面, http://101.132.162.63/shiwu/qiancengbing
+Lobster bisque, 龙虾奶油浓汤, http://101.132.162.63/shiwu/naiyouyuminongtang
+Lobster roll sandwich, 三明治, http://101.132.162.63/shiwu/sanmingzhi_jiahuotui_jidan
+Macaroni and cheese, 芝士通心粉, http://101.132.162.63/shiwu/yidalitongxinfen
+Macarons, 马卡龙, http://101.132.162.63/shiwu/macaron
+Miso soup, 味增汤, http://101.132.162.63/shiwu/weidaodoufuweizengtang
+Mussels, 青口贝, http://101.132.162.63/shiwu/xinxilanqingkoubei
+Nachos, 玉米片, http://101.132.162.63/shiwu/yumipian
+Omelette, 煎蛋, http://101.132.162.63/shiwu/xiangchunjiandan
+Onion rings, 洋葱圈, http://101.132.162.63/shiwu/yangcongquan
+Oysters, 生蚝, http://101.132.162.63/shiwu/shengci
+Pad thai, 泰式炒粉, http://101.132.162.63/shiwu/chaomian2
+Paella, 炒饭, http://101.132.162.63/shiwu/shijinchaofan
+Pancakes, 烙饼, http://101.132.162.63/shiwu/laobing_biaozhunfen
+Panna cotta, 意式奶冻, http://101.132.162.63/shiwu/yishimangguonaidong
+Peking duck, 北京烤鸭, http://101.132.162.63/shiwu/beijingkaoya
+Pho, 越南米粉, http://101.132.162.63/shiwu/xianmifen
+Pizza, 披萨, http://101.132.162.63/shiwu/bisabing_jianailao_rouheshucai
+Pork chop, 猪排, http://101.132.162.63/shiwu/zhuxiaopai
+Poutine, 薯条, http://101.132.162.63/shiwu/shutiao_kendeji
+Prime rib, 牛排, http://101.132.162.63/shiwu/heijiaoniupai
+Pulled pork sandwich, 三明治, http://101.132.162.63/shiwu/sanmingzhi_jiahuotui_jidan
+Ramen, 拉面, http://101.132.162.63/shiwu/yitianmianguanhilamian
+Ravioli, 馄饨, http://101.132.162.63/shiwu/jiaozi_suxian
+Red velvet cake, 蛋糕, http://101.132.162.63/shiwu/dangao_huangdangao
+Risotto, 烩饭, http://101.132.162.63/shiwu/doufuhuifan
+Samosa, 萨莫萨三角饺, http://101.132.162.63/shiwu/fd0ae207
+Sashimi, 生鱼片, http://101.132.162.63/shiwu/yupiangan
+Scallops, 扇贝, http://101.132.162.63/shiwu/shanbei_xian
+Seaweed salad, 沙拉, http://101.132.162.63/shiwu/selayou
+Shrimp and grits, 虾和粉打窝沙食, http://101.132.162.63/shiwu/fd4dbc4e
+Spaghetti bolognese, 意大利面, http://101.132.162.63/shiwu/tongxinmian
+Spaghetti carbonara, 意大利面, http://101.132.162.63/shiwu/tongxinmian
+Spring rolls, 春卷, http://101.132.162.63/shiwu/chunjuan
+Steak, 牛扒, http://101.132.162.63/shiwu/jianniuba
+Strawberry shortcake, 草莓脆饼, http://101.132.162.63/shiwu/caomei
+Sushi, 寿司, http://101.132.162.63/shiwu/shousijuanhihifebruaryzizhi
+Tacos, 玉米饼, http://101.132.162.63/shiwu/laoyumibing
+Takoyaki, 章鱼烧, http://101.132.162.63/shiwu/zhangyu_bazhuayu
+Tiramisu, 提拉米苏, http://101.132.162.63/shiwu/tilamisu_Tiramisu
+Tuna tartare, 鞑靼金枪鱼, http://101.132.162.63/shiwu/jinqiangyu_youjin
+Waffles, 威化饼, http://101.132.162.63/shiwu/qiaokeli_weifu
