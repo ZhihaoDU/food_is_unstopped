@@ -15,6 +15,7 @@ from .food_classsifier import food_classify
 def get_food_information_by_path(img_path, top_num):
     print("Call food classify...")
     food_label_list = food_classify(img_path)[:top_num]
+    # food_label_list = food_classify(img_path, top_num)
     print("Result length: %d" % len(food_label_list))
     print(food_label_list)
     food_information_list = []
